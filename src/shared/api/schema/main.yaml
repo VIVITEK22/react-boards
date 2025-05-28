@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  title: Miro-like Collaborative Whiteboard API
+  description: API for a collaborative whiteboard application similar to Miro
+  version: 1.0.0
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /boards:
+    get:
+      $ref: "./endpoints/boards.yaml#/getAllBoards"
+
+    post:
+      $ref: "./endpoints/boards.yaml#/createBoard"
+
+  /boards/{boardId}:
+    get:
+      $ref: "./endpoints/boards.yaml#/getBoardById"
+
+    delete:
+      $ref: "./endpoints/boards.yaml#/deleteBoard"
+
+  /boards/{boardId}/rename:
+    put:
+      $ref: "./endpoints/boards.yaml#/renameBoard"
+
+  /boards/{boardId}/favorite:
+    put:
+      $ref: "./endpoints/boards.yaml#/updateBoardFavorite"
+
+  /auth/login:
+    post:
+      $ref: "./endpoints/auth.yaml#/login"
+
+  /auth/register:
+    post:
+      $ref: "./endpoints/auth.yaml#/register"
+
+  /auth/refresh:
+    post:
+      $ref: "./endpoints/auth.yaml#/refresh"
+
+  /logout:
+    post:
+      $ref: "./endpoints/auth.yaml#/logout"

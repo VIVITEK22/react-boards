@@ -1,0 +1,95 @@
+openapi: 3.0.0
+info:
+  title: Miro-like Collaborative Whiteboard API
+  description: API for a collaborative whiteboard application similar to Miro
+  version: 1.0.0
+paths:
+  /boards:
+    get:
+      summary: Get all boards for current user
+      responses:
+        '200':
+          description: List of boards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Board'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      summary: Create a new board
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBoard'
+      responses:
+        '201':
+          description: Board created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /boards/{boardId}:
+    delete:
+      summary: Delete a board
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Board deleted successfully
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+components:
+  schemas:
+    Board:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Error:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    CreateBoard:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+  responses:
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

@@ -1,0 +1,220 @@
+schemas:
+  Board:
+    type: object
+    required:
+      - id
+      - name
+      - createdAt
+      - updatedAt
+      - lastOpenedAt
+      - isFavorite
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      lastOpenedAt:
+        type: string
+        format: date-time
+      isFavorite:
+        type: boolean
+
+  RenameBoard:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+
+  UpdateBoardFavorite:
+    type: object
+    required:
+      - isFavorite
+    properties:
+      isFavorite:
+        type: boolean
+
+  BoardsList:
+    type: object
+    required:
+      - list
+      - total
+      - totalPages
+    properties:
+      list:
+        type: array
+        items:
+          $ref: "#/schemas/Board"
+      total:
+        type: integer
+      totalPages:
+        type: integer
+
+getBoardById:
+  summary: Get board by id
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "200":
+      description: Board
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/Board"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
+
+getAllBoards:
+  summary: Get all boards for current user
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 1
+    - name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 10
+    - name: sort
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - createdAt
+          - updatedAt
+          - lastOpenedAt
+          - name
+    - name: isFavorite
+      in: query
+      required: false
+      schema:
+        type: boolean
+    - name: search
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    "200":
+      description: List of boards
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/BoardsList"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+renameBoard:
+  summary: Create a new board
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/RenameBoard"
+  responses:
+    "201":
+      description: Board created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/Board"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+updateBoardFavorite:
+  summary: Update board favorite status
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "#/schemas/UpdateBoardFavorite"
+  responses:
+    "201":
+      description: Board created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/Board"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+createBoard:
+  summary: Create a new board
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+  responses:
+    "201":
+      description: Board created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "#/schemas/Board"
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+
+deleteBoard:
+  summary: Delete a board
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    "204":
+      description: Board deleted successfully
+    "401":
+      $ref: "../shared/responses.yaml#/UnauthorizedError"
+    "404":
+      $ref: "../shared/responses.yaml#/NotFoundError"
