@@ -1,13 +1,14 @@
 import "react-router-dom";
+import { CONFIG } from "./config";
 
 export const ROUTES = {
-  HOME: "/",
-  LOGIN: "/login",
-  REGISTER: "/register",
-  BOARDS: "/boards",
-  BOARDS_FAVORITE: "/boards/favorite",
-  BOARDS_RECENT: "/boards/recent",
-  BOARD: "/boards/:boardId",
+  HOME: CONFIG.BASE_URL,
+  LOGIN: `/login`,
+  REGISTER: `/register`,
+  BOARDS: `/boards`,
+  BOARDS_FAVORITE: `/boards/favorite`,
+  BOARDS_RECENT: `/boards/recent`,
+  BOARD: `/boards/:boardId`,
 } as const;
 
 export type PathParams = {
