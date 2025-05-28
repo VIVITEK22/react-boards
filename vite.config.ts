@@ -4,6 +4,6 @@ import viteTsconfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
-  base: process.env.PROD ? "/react-boards/" : "/",
+  base: "/react-boards/",
   plugins: [react(), viteTsconfigPaths(), tailwindcss()],
 });
