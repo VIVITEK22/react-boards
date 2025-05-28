@@ -1,4 +1,4 @@
-import{c as u,a as l,r as x,j as s,B as h}from"./index-yBAOsCqi.js";import{u as B,a as g,B as L,b as j}from"./boards-list-sort-CHiNU2ZZ.js";import{p as n,u as p,B as y,a as m,b,c as f,d as C,V as P,e as S,f as F}from"./boards-sidebar-C4QfFFoP.js";/**
+import{c as u,a as l,r as x,j as s,B as h}from"./index-C_rV8sod.js";import{u as B,a as g,B as L,b as j}from"./boards-list-sort-CzSLQIR0.js";import{p as n,u as p,B as y,a as m,b,c as f,d as C,V as P,e as S,f as F}from"./boards-sidebar-vv4v8Pzc.js";/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
