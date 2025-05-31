@@ -28,11 +28,10 @@ export function useToggleFavorite() {
       return;
 
     const newFavoriteState = !board.isFavorite;
+    setFavorite((prev) => ({ ...prev, [board.id]: newFavoriteState }));
 
     startTransition(async () => {
       try {
-        setFavorite((prev) => ({ ...prev, [board.id]: newFavoriteState }));
-
         await toggleFavorite.mutateAsync({
           params: { path: { boardId: board.id } },
           body: { isFavorite: newFavoriteState },

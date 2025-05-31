@@ -16,7 +16,7 @@ import {
 } from "@/shared/ui/kit/form";
 import { Input } from "@/shared/ui/kit/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition, useState } from "react";
+import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -46,16 +46,14 @@ export function TemplateModal({
     },
   });
 
-  const onSubmit = form.handleSubmit((values) => {
-    startTransition(async () => {
-      try {
-        await onCreate({ name: values.title });
-        form.reset();
-        setOpen(false);
-      } catch {
-        toast.error("Ошибка при создании доски");
-      }
-    });
+  const onSubmit = form.handleSubmit(async (values) => {
+    try {
+      await onCreate({ name: values.title });
+      form.reset();
+      setOpen(false);
+    } catch {
+      toast.error("Ошибка при создании доски");
+    }
   });
 
   return (
